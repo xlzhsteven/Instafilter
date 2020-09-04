@@ -15,8 +15,10 @@ struct ContentView: View {
     @State private var filterIntensity = 0.5
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    @State private var processedImage: UIImage?
+    @State private var showingFilterSheet = false
     
-    @State var currentFilter = CIFilter.sepiaTone()
+    @State var currentFilter: CIFilter = CIFilter.sepiaTone()
     let context = CIContext()
     
     var body: some View {
@@ -60,13 +62,28 @@ struct ContentView: View {
                 
                 HStack {
                     Button("Change Filter") {
-                        // change filter
+                        self.showingFilterSheet = true
                     }
                     
                     Spacer()
                     
                     Button("Save") {
-                        // save the picture
+                        // Unwrap processedImage
+                        guard let processedImage = self.processedImage else { return }
+                        
+                        // Initialize image saver
+                        let imageSaver = ImageSaver()
+                        // Provide success/failure handler to the image saver
+                        imageSaver.onComplete = { result in
+                            switch result {
+                            case .failure(_):
+                                print("Save failed")
+                            case .success(_):
+                                print("Save successful")
+                            }
+                        }
+                        // Trigger image saving
+                        imageSaver.writeToPhotoAlbum(image: processedImage)
                     }
                 }
             }
@@ -75,6 +92,19 @@ struct ContentView: View {
             .sheet(isPresented: $showingImagePicker,
                    onDismiss: loadImage) { // When sheet is dismissed, call loadImage()
                 ImagePicker(image: self.$inputImage) // Present ImagePicker in a sheet
+            }
+            .actionSheet(isPresented: $showingFilterSheet) { () -> ActionSheet in
+                // Create ActionSheet with buttons to apply different filters
+                ActionSheet(title: Text("Select a filter"), buttons: [
+                    .default(Text("Crystallize")) { self.setFilter(CIFilter.crystallize()) },
+                    .default(Text("Edges")) { self.setFilter(CIFilter.edges()) },
+                    .default(Text("Gaussian Blur")) { self.setFilter(CIFilter.gaussianBlur()) },
+                    .default(Text("Pixellate")) { self.setFilter(CIFilter.pixellate()) },
+                    .default(Text("Sepia Tone")) { self.setFilter(CIFilter.sepiaTone()) },
+                    .default(Text("Unsharp Mask")) { self.setFilter(CIFilter.unsharpMask()) },
+                    .default(Text("Vignette")) { self.setFilter(CIFilter.vignette()) },
+                    .cancel()
+                ])
             }
         }
     }
@@ -87,14 +117,25 @@ struct ContentView: View {
     }
     
     func applyProcessing() {
-        currentFilter.intensity = Float(filterIntensity) // Set filter intensity with filterIntensity value
+        // Apply slider value differently for different type of filter input keys (Prevent crash due to different values are needed for different keys as well)
+        let inputKeys = currentFilter.inputKeys
+        if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey) }
+        if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(filterIntensity * 200, forKey: kCIInputRadiusKey) }
+        if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(filterIntensity * 10, forKey: kCIInputScaleKey) }
         
         guard let outputImage = currentFilter.outputImage else { return } // Get output input with CIImage type
         
         if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) { // Create CGImage fro CIImage
             let uiImage = UIImage(cgImage: cgimg) // Create UIImage from CIImage
             image = Image(uiImage: uiImage) // Save the transformed image to the image placeholder
+            processedImage = uiImage // Save the processed image so it can be used later
         }
+    }
+    
+    // Set currentFilter with filter from the method argument, then load image
+    func setFilter(_ filter: CIFilter) {
+        currentFilter = filter
+        loadImage()
     }
 }
 

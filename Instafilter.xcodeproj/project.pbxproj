@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D15E54C12501FE4E0019939A /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15E54C02501FE4E0019939A /* ImageSaver.swift */; };
 		D16F0B2424FF4D4500103BC7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16F0B2324FF4D4500103BC7 /* ImagePicker.swift */; };
 		D19A54B424F8BCB700A64587 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A54B324F8BCB700A64587 /* AppDelegate.swift */; };
 		D19A54B624F8BCB700A64587 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A54B524F8BCB700A64587 /* SceneDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D15E54C02501FE4E0019939A /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		D16F0B2324FF4D4500103BC7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		D19A54B024F8BCB700A64587 /* Instafilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instafilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D19A54B324F8BCB700A64587 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				D19A54B324F8BCB700A64587 /* AppDelegate.swift */,
 				D19A54B524F8BCB700A64587 /* SceneDelegate.swift */,
 				D19A54B724F8BCB700A64587 /* ContentView.swift */,
+				D15E54C02501FE4E0019939A /* ImageSaver.swift */,
 				D16F0B2324FF4D4500103BC7 /* ImagePicker.swift */,
 				D19A54B924F8BCBA00A64587 /* Assets.xcassets */,
 				D19A54BE24F8BCBA00A64587 /* LaunchScreen.storyboard */,
@@ -151,6 +154,7 @@
 			files = (
 				D19A54B424F8BCB700A64587 /* AppDelegate.swift in Sources */,
 				D16F0B2424FF4D4500103BC7 /* ImagePicker.swift in Sources */,
+				D15E54C12501FE4E0019939A /* ImageSaver.swift in Sources */,
 				D19A54B624F8BCB700A64587 /* SceneDelegate.swift in Sources */,
 				D19A54B824F8BCB700A64587 /* ContentView.swift in Sources */,
 			);
@@ -290,6 +294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Instafilter/Preview Content\"";
+				DEVELOPMENT_TEAM = C2Z2495783;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Instafilter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -309,6 +314,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Instafilter/Preview Content\"";
+				DEVELOPMENT_TEAM = C2Z2495783;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Instafilter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
